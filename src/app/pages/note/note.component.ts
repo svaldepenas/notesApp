@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NoteModel } from '../../models/note.model';
 import { NgForm } from '@angular/forms';
+import { NotesService } from '../../services/notes.service';
 
 @Component({
   selector: 'app-note',
@@ -11,13 +12,9 @@ export class NoteComponent implements OnInit {
 
   note: NoteModel;
 
-  constructor() {
+  constructor( private notesService: NotesService ) {
     this.note = new NoteModel();
-    this.note.id = 'as-sdw-34eqe';
-    this.note.title = 'Cosas para comprar';
-    this.note.description = 'Comprar soja, bolsas de basura.';
-    this.note.author = 'Sergio Valdepeñas del Pozo';
-    this.note.finishDate = new Date();
+    this.note.id = 'Firebase ID';
   }
 
   ngOnInit() {
@@ -28,8 +25,10 @@ export class NoteComponent implements OnInit {
       console.log('Formulario inválido');
       return;
     }
-    console.log(noteForm);
-    console.log(this.note);
+
+    this.notesService.createNote( this.note ).subscribe( resp => {
+      console.log(resp);
+    });
   }
 
 }

@@ -8,5 +8,6 @@ export class NoteModel {
 
     constructor() {
         this.creationDate = new Date();
+        this.finishDate = new Date();
     }
 }
