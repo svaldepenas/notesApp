@@ -1,0 +1,48 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h3 class="float-left">Note: <small>{{note.title}}</small></h3>
+            <a [routerLink]="['/home']" class="btn btn-outline-secondary float-right"><i class="fas fa-arrow-left"></i></a>
+        </div>
+    </div>
+    <hr>
+
+    <div class="row animated fadeInUp fast">
+        <div class="col">
+            <form (submit)="saveNote( noteForm )" #noteForm="ngForm">
+                <div class="form-group">
+                    <label for="inputTitle">Firebase ID</label>
+                    <input type="text" class="form-control" disabled placeholder="Firebase ID" name="id" [(ngModel)]="note.id">
+                    <small>This field is autofill.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputTitle">Title</label>
+                    <input type="text" class="form-control" placeholder="Note title" required minlength="5" name="title" [(ngModel)]="note.title">
+                    <span *ngIf="noteForm.submitted && noteForm.form.controls['title'].errors" class="text-danger animated fadeIn mt-0 mb-2"><small>El título es obligatorio y debe tener al menos 5 carasteres.</small></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputTitle">Description</label>
+                    <textarea type="text" class="form-control" placeholder="Note description" maxlength="100" rows="4" name="description" [(ngModel)]="note.description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="inputTitle">Finish Date</label>
+                    <input type="date" class="form-control form-control-sm" name="finishDate" [(ngModel)]="note.finishDate">
+                </div>
+                <div class="form-group">
+                    <label for="inputTitle">Author</label>
+                    <select class="form-control form-control-sm" name="author" [(ngModel)]="note.author">
+                        <option>{{note.author}}</option>
+                    </select>
+                </div>
+                <div class="form-group mt-5 text-center">
+                    <button class="btn btn-block btn-outline-info" type="submit"><i class="far fa-save"></i> Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

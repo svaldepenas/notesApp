@@ -10,6 +10,8 @@ import { RegistroComponent } from './pages/registro/registro.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NavbarComponent } from './pages/shared/navbar/navbar.component';
+import { NotesComponent } from './pages/notes/notes.component';
+import { NoteComponent } from './pages/note/note.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { NavbarComponent } from './pages/shared/navbar/navbar.component';
     RegistroComponent,
     HomeComponent,
     LoginComponent,
-    NavbarComponent
+    NavbarComponent,
+    NotesComponent,
+    NoteComponent
   ],
   imports: [
     BrowserModule,
