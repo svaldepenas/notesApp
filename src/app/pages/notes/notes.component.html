@@ -1,32 +1,33 @@
 <div class="jumbotron animated fadeIn slow">
     <h5 class="display-4">Hello, {{userInfo.name}} {{userInfo.surname}}!</h5>
-    <p class="lead">This is an app that let you share notes whit other people.
-        <hr class="my-4">
-        <p>Try to write your own note.</p>
-        <p class="lead">
-            <a class="btn btn-outline-primary btn-lg" [routerLink]="['/note', '']"><i class="fas fa-plus-circle"></i> Add Note</a>
-        </p>
+    <p class="lead">This is an app that let you share notes whit other people.</p>
+    <hr class="my-4">
+    <p>Try to write your own note.</p>
+    <a class="btn btn-sm btn-outline-primary btn-lg" [routerLink]="['/note', 'new']"><i class="fas fa-plus-circle"></i> Add Note</a>
 </div>
 
 <h3> Notes List</h3>
 <hr>
 
 <div class="card-columns">
-    <div class="card animated fadeInUp delay-2s slower">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This card has a regular title and short paragraphy of text below it.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    <div *ngFor="let note of notes; let i = index" class="card animated fadeInUp delay-2s slower">
+        <div class="card-body" [routerLink]="['/note', note.id]">
+            <h5 class="card-title">{{note.title}}</h5>
+            <p class="card-text">{{note.description}}.</p>
+            <p class="card-text"><small class="text-muted">Expire {{note.finishDate}}</small></p>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-block btn-sm btn-outline-danger" (click)="deleteNote(note, i)"> Delete</a>
         </div>
     </div>
 </div>
 
-<div class="alert alert-danger text-center" role="alert">
+<div *ngIf="notes.length === 0 && loaded" class="alert alert-danger text-center" role="alert">
     <h5 class="alert-heading mb-3">No entry for notes!</h5>
     <i class="fas fa-exclamation-triangle fa-2x"></i>
 </div>
 
-<div class="alert alert-success text-center" role="alert">
+<div *ngIf="!loaded" class="alert alert-success text-center" role="alert">
     <h4 class="alert-heading">Loading notes</h4>
     <p>Wait untill all notes are loaded.</p>
     <hr>
