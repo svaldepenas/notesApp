@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserModel } from '../models/user.model';
 import { map } from 'rxjs/operators';
+import { UserInfoModel } from '../models/userInfo.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,10 @@ export class AuthService {
   private url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty';
   private apiKey = 'AIzaSyCLzr9ShGGA2DFi-nV7gTe-mip2ajKAafQ';
 
+  private apiURI = 'https://loginangular-7f32d.firebaseio.com';
+
   userToken: string;
+  userId: string;
 
   // Create new user
   // https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=[API_KEY]
@@ -39,6 +43,8 @@ export class AuthService {
       .pipe(map( resp => {
        // tslint:disable-next-line:no-string-literal
        this.saveToken( resp['idToken']);
+       // tslint:disable-next-line:no-string-literal
+       this.userId = resp['localId'];
        return resp;
      }));
   }
@@ -54,8 +60,18 @@ export class AuthService {
      .pipe(map( resp => {
        // tslint:disable-next-line:no-string-literal
        this.saveToken( resp['idToken']);
+       // tslint:disable-next-line:no-string-literal
+       this.createUserInfo( resp['localId'], resp['email'] ).subscribe();
        return resp;
      }));
+  }
+
+  private createUserInfo(id: string, email: string) {
+    const userInfo: UserInfoModel = new UserInfoModel();
+    userInfo.email = email;
+    userInfo.id = id;
+
+    return this.http.post(`${this.apiURI}/user.json`, userInfo);
   }
 
   private saveToken( idToken: string ) {
@@ -75,6 +91,7 @@ export class AuthService {
     }
   }
 
+
   isLogged(): boolean {
     if (!this.userToken) {
       return false;
@@ -91,4 +108,19 @@ export class AuthService {
       return false;
     }
   }
+
+  getUserInfo() {
+    const authData = {
+      idToken: this.userToken
+    };
+    return this.http.post(`${this.url}/getAccountInfo?key=${ this.apiKey }`, authData).pipe(map(data => {
+      if (undefined !== data) {
+        // tslint:disable-next-line:no-string-literal
+        return data['users'][0];
+      } else {
+        return undefined;
+      }
+    }));
+  }
+
 }

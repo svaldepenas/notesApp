@@ -45,7 +45,7 @@ export class RegistroComponent implements OnInit {
         localStorage.setItem('email', this.user.email);
       }
 
-      // this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/login');
     }, (err) => {
       Swal.fire({
         type: 'error',

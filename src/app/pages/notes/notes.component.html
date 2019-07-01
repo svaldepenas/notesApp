@@ -1,9 +1,18 @@
-<div class="jumbotron animated fadeIn slow">
+<div *ngIf="rookie" class="alert alert-dismissible alert-secondary animated fadeIn slow mb-5">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
     <h5 class="display-4">Hello, {{userInfo.name}} {{userInfo.surname}}!</h5>
     <p class="lead">This is an app that let you share notes whit other people.</p>
     <hr class="my-4">
     <p>Try to write your own note.</p>
-    <a class="btn btn-sm btn-outline-primary btn-lg" [routerLink]="['/note', 'new']"><i class="fas fa-plus-circle"></i> Add Note</a>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group mr-2" role="group">
+            <a class="btn btn-sm btn-outline-primary btn-lg" [routerLink]="['/profile']"><i class="far fa-user-circle"></i> Profile</a>
+        </div>
+        <div class="btn-group" role="group">
+            <a class="btn btn-sm btn-outline-primary btn-lg" [routerLink]="['/note', 'new']"><i class="fas fa-plus-circle"></i> Add Note</a>
+        </div>
+    </div>
+
 </div>
 
 <h3> Notes List</h3>

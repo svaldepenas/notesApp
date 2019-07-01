@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { UserInfoModel } from '../../models/userInfo.model';
-import { NotesService } from '../../services/notes.service';
-import { NoteModel } from '../../models/note.model';
 import { Router } from '@angular/router';
+
+import { NotesService } from '../../services/notes.service';
+import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
+
+import { UserInfoModel } from '../../models/userInfo.model';
+import { NoteModel } from '../../models/note.model';
+
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,16 +20,14 @@ export class NotesComponent implements OnInit {
   userInfo: UserInfoModel;
   notes: NoteModel[] = [];
   loaded = false;
+  rookie = false;
 
   constructor( private notesService: NotesService,
-               private router: Router) {
+               private authService: AuthService,
+               private userService: UserService,
+               private router: Router ) {
+
     this.userInfo = new UserInfoModel();
-    this.userInfo.name = 'Sergio';
-    this.userInfo.surname = 'Valdepeñas del Pozo';
-    this.userInfo.mobile = '618358605';
-    this.userInfo.birthdate = new Date();
-    this.userInfo.birthdate.setTime(741139200);
-    this.userInfo.address = 'C/ San Clodoaldo, 19';
   }
 
   ngOnInit() {
@@ -32,6 +35,17 @@ export class NotesComponent implements OnInit {
       this.notes = resp;
       this.loaded = true;
     });
+
+    this.authService.getUserInfo().subscribe(user => {
+        console.log(user);
+        // tslint:disable-next-line:no-string-literal
+        this.rookie = this.checkRookie(user['createdAt']);
+        // tslint:disable-next-line:no-string-literal
+        this.userService.getUserInfoById(user['localId']).subscribe(userInfo => {
+          console.log(userInfo);
+          this.userInfo = userInfo;
+        });
+      });
   }
 
   deleteNote(note: NoteModel, i: number) {
@@ -58,6 +72,21 @@ export class NotesComponent implements OnInit {
         });
       }
     });
+  }
+
+  private checkRookie(createdAt: string) {
+    const currentDate = new Date();
+
+    const createDate = new Date();
+    createDate.setTime(Number(createdAt));
+
+    const diffTime = Math.abs(currentDate.getTime() - createDate.getTime());
+    console.log(Math.ceil(diffTime / (1000 * 3600 * 24)));
+    if ((Math.ceil(diffTime / (1000 * 3600 * 24))) > 6) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
 }

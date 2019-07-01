@@ -1,0 +1,62 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h3 class="float-left">Profile: <small>{{userInfo.name}} {{userInfo.surname}}</small></h3>
+            <a [routerLink]="['/home']" class="btn btn-outline-secondary float-right"><i class="fas fa-arrow-left"></i></a>
+        </div>
+    </div>
+    <hr>
+
+    <div class="row animated fadeInUp fast">
+        <div class="col">
+            <form (submit)="saveProfile( noteForm )" #noteForm="ngForm">
+                <div class="form-group">
+                    <label for="inputTitle">Firebase ID</label>
+                    <input type="text" class="form-control" disabled placeholder="Firebase ID" name="id" [(ngModel)]="userInfo.id">
+                    <small>This field is autofill.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputTitle">Name</label>
+                    <input type="text" class="form-control" placeholder="Name" required minlength="5" name="name" [(ngModel)]="userInfo.name">
+                    <span *ngIf="noteForm.submitted && noteForm.form.controls['name'].errors" class="text-danger animated fadeIn mt-0 mb-2"><small>El nombre es obligatorio y debe tener al menos 5 carasteres.</small></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputTitle">Surname</label>
+                    <input type="text" class="form-control" placeholder="Surname" required minlength="5" name="surname" [(ngModel)]="userInfo.surname">
+                    <span *ngIf="noteForm.submitted && noteForm.form.controls['surname'].errors" class="text-danger animated fadeIn mt-0 mb-2"><small>El apellido es obligatorio y debe tener al menos 5 carasteres.</small></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputTitle">Email</label>
+                    <input type="email" class="form-control" placeholder="Email" required name="email" [(ngModel)]="userInfo.email">
+                    <span *ngIf="noteForm.submitted && noteForm.form.controls['email'].errors" class="text-danger animated fadeIn mt-0 mb-2"><small>El email es obligatorio.</small></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputTitle">Birthdate</label>
+                    <input type="date" class="form-control form-control-sm" name="birthdate" [(ngModel)]="userInfo.birthdate">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputTitle">Address</label>
+                    <textarea type="text" class="form-control" placeholder="Full address" maxlength="100" rows="3" name="address" [(ngModel)]="userInfo.address"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputTitle">Mobile</label>
+                    <input type="text" class="form-control form-control-sm" required pattern="[0-9]{9}" placeholder="Mobile" name="mobile" [(ngModel)]="userInfo.mobile">
+                    <span *ngIf="noteForm.submitted && noteForm.form.controls['mobile'].errors" class="text-danger animated fadeIn mt-0 mb-2"><small>El móvil es obligatorio y debe ser un móvil válido.</small></span>
+                </div>
+
+                <div class="form-group mt-5 text-center">
+                    <button class="btn btn-block btn-outline-info" type="submit"><i class="far fa-save"></i> Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

@@ -12,6 +12,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { NavbarComponent } from './pages/shared/navbar/navbar.component';
 import { NotesComponent } from './pages/notes/notes.component';
 import { NoteComponent } from './pages/note/note.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { NoteComponent } from './pages/note/note.component';
     LoginComponent,
     NavbarComponent,
     NotesComponent,
-    NoteComponent
+    NoteComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
