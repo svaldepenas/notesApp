@@ -32,9 +32,10 @@ export class NotesService {
     return this.http.put(`${this.apiURI}/notes/${note.id}.json`, noteTmp);
   }
 
-  getNotes() {
+  getNotes( userId: string) {
+    console.log('UserId : ', userId);
     return this.http.get(`${this.apiURI}/notes.json`).pipe(
-      map( resp => this.createNotesArray(resp) ), delay(1500)
+      map( resp => this.filterAuthorOrMember(this.createNotesArray(resp), userId) ), delay(1000)
     );
   }
 
@@ -50,6 +51,18 @@ export class NotesService {
     });
 
     return notes;
+  }
+
+  private filterAuthorOrMember( notes: NoteModel[], userId: string) {
+    const notesResult: NoteModel[] = [];
+
+    notes.forEach(note => {
+      if (note.author === userId || ( undefined !== note.members && note.members.includes(userId))) {
+        notesResult.push(note);
+      }
+    });
+
+    return notesResult;
   }
 
   getNoteById( noteId: string ) {

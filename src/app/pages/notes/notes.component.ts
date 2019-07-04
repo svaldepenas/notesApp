@@ -31,21 +31,21 @@ export class NotesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.notesService.getNotes().subscribe(resp => {
-      this.notes = resp;
-      this.loaded = true;
-    });
-
     this.authService.getUserInfo().subscribe(user => {
-        console.log(user);
+      // tslint:disable-next-line:no-string-literal
+      this.rookie = this.checkRookie(user['createdAt']);
+      // tslint:disable-next-line:no-string-literal
+      this.userService.getUserInfoById(user['localId']).subscribe(userInfoResp => {
+        // console.log(userInfo);
+        this.userInfo = userInfoResp;
+
         // tslint:disable-next-line:no-string-literal
-        this.rookie = this.checkRookie(user['createdAt']);
-        // tslint:disable-next-line:no-string-literal
-        this.userService.getUserInfoById(user['localId']).subscribe(userInfo => {
-          console.log(userInfo);
-          this.userInfo = userInfo;
+        this.notesService.getNotes(this.userInfo['userId']).subscribe(resp => {
+          this.notes = resp;
+          this.loaded = true;
         });
       });
+    });
   }
 
   deleteNote(note: NoteModel, i: number) {
@@ -82,7 +82,7 @@ export class NotesComponent implements OnInit {
 
     const diffTime = Math.abs(currentDate.getTime() - createDate.getTime());
     console.log(Math.ceil(diffTime / (1000 * 3600 * 24)));
-    if ((Math.ceil(diffTime / (1000 * 3600 * 24))) > 6) {
+    if ((Math.ceil(diffTime / (1000 * 3600 * 24))) > 2) {
       return false;
     } else {
       return true;

@@ -61,15 +61,16 @@ export class AuthService {
        // tslint:disable-next-line:no-string-literal
        this.saveToken( resp['idToken']);
        // tslint:disable-next-line:no-string-literal
-       this.createUserInfo( resp['localId'], resp['email'] ).subscribe();
+       this.createUserInfo( resp['localId'], resp['email'], user.fullname ).subscribe();
        return resp;
      }));
   }
 
-  private createUserInfo(id: string, email: string) {
+  private createUserInfo(id: string, email: string, name: string) {
     const userInfo: UserInfoModel = new UserInfoModel();
     userInfo.email = email;
-    userInfo.id = id;
+    userInfo.userId = id;
+    userInfo.name = name;
 
     return this.http.post(`${this.apiURI}/user.json`, userInfo);
   }
@@ -113,6 +114,7 @@ export class AuthService {
     const authData = {
       idToken: this.userToken
     };
+
     return this.http.post(`${this.url}/getAccountInfo?key=${ this.apiKey }`, authData).pipe(map(data => {
       if (undefined !== data) {
         // tslint:disable-next-line:no-string-literal

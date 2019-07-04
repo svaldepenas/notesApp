@@ -14,6 +14,8 @@ import { NotesComponent } from './pages/notes/notes.component';
 import { NoteComponent } from './pages/note/note.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown-angular7';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +31,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

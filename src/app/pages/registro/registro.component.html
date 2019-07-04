@@ -14,10 +14,9 @@
                     <span class="focus-input100"></span>
                 </div>
 
-                <span *ngIf="registryForm.submitted && registryForm.form.controls['fullname'].errors" class="text-danger animated fadeIn">El nombre es obligatorio y debe ser más de 10 letras</span>
+                <span *ngIf="registryForm.submitted && registryForm.form.controls['fullname'].errors" class="text-danger animated fadeIn">El nombre es obligatorio</span>
                 <div class="wrap-input100 m-b-16">
-                    <input class="input100" type="text" name="fullname" [(ngModel)]="user.fullname" placeholder="Nombre y apellidos" required minlength="10">
-
+                    <input class="input100" type="text" name="fullname" [(ngModel)]="user.fullname" placeholder="Nombre" required>
                     <span class="focus-input100"></span>
                 </div>
 

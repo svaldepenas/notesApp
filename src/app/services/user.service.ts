@@ -13,22 +13,50 @@ export class UserService {
 
   constructor( private http: HttpClient ) { }
 
-
-  getUserInfoById( id: string ) {
+  getAllUsers( userId: string ) {
     return this.http.get(`${this.apiURI}/user.json`).pipe(map((data: object) => {
-      return this.createUserInfoObj(data);
+      return this.createUsersArray(data, userId);
     }));
   }
 
-  private createUserInfoObj(userObj: object) {
+  private createUsersArray(usersObj: object, userId: string) {
+    const users: UserInfoModel[] = [];
+
+    if ( usersObj === null) { return []; }
+
+    Object.keys(usersObj).forEach(key => {
+      // tslint:disable-next-line:no-string-literal
+      if (usersObj[key]['userId'] !== userId) {
+        const user: UserInfoModel = usersObj[key];
+        user.id = key;
+        users.push(user);
+      }
+    });
+
+    return users;
+  }
+
+  getUserInfoById( id: string ) {
+    return this.http.get(`${this.apiURI}/user.json`).pipe(map((data: object) => {
+      return this.createUserInfoObj(data, id);
+    }));
+  }
+
+  private createUserInfoObj(userObj: object, id: string) {
     let userInfo: UserInfoModel = new UserInfoModel();
 
     if ( userObj === null) { return userInfo; }
 
-    userInfo = Object.values(userObj)[0];
-    userInfo.id = Object.keys(userObj)[0];
-
-    return userInfo;
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < Object.keys(userObj).length; i++) {
+      // tslint:disable-next-line:no-string-literal
+      if ( Object.values(userObj)[i]['userId'] === id) {
+        userInfo = Object.values(userObj)[i];
+        userInfo.id = Object.keys(userObj)[i];
+        console.log(userInfo);
+        return userInfo;
+      }
+    }
   }
 
   updateUserInfo( userInfo: UserInfoModel ) {

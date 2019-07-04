@@ -5,9 +5,11 @@ export class NoteModel {
     author: string;
     creationDate: Date;
     finishDate: Date;
+    members: string[];
 
     constructor() {
         this.creationDate = new Date();
         this.finishDate = new Date();
+        this.members = [];
     }
 }
