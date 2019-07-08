@@ -34,7 +34,7 @@
     <div *ngFor="let note of notes; let i = index" class="card animated fadeInUp delay-2s slower">
         <div class="card-body" [routerLink]="['/note', note.id]">
             <h5 class="card-title">{{note.title}}</h5>
-            <p class="card-text">{{note.description}}.</p>
+            <p class="card-text">{{note.description | slice:0:20}}.</p>
             <p class="card-text"><small class="text-muted">Expire {{note.finishDate}}</small></p>
         </div>
         <div class="card-footer">
