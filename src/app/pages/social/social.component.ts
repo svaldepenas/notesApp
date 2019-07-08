@@ -18,6 +18,7 @@ export class SocialComponent implements OnInit {
   userInfo: UserInfoModel;
   search: string;
   friends: FriendModel;
+  loaded = false;
 
   constructor( private userService: UserService,
                private authService: AuthService,
@@ -35,6 +36,7 @@ export class SocialComponent implements OnInit {
 
         this.friendsService.getAllFriends(this.userInfo.userId).subscribe((friend: FriendModel) => {
           this.friends = friend;
+          this.loaded = true;
         });
       });
     });
@@ -44,13 +46,16 @@ export class SocialComponent implements OnInit {
   }
 
   onSearchChange( event: any ) {
+    this.loaded = false;
     if (this.search.length === 0) {
       this.userService.getAllUsers(this.userInfo.userId).subscribe((data: UserInfoModel[]) => {
           this.users = data;
+          this.loaded = true;
       });
     } else {
       this.userService.getUsersByTerm(this.userInfo.userId, this.search).subscribe((data: UserInfoModel[]) => {
         this.users = data;
+        this.loaded = true;
       });
     }
   }
