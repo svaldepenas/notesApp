@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserModel } from '../models/user.model';
 import { map } from 'rxjs/operators';
 import { UserInfoModel } from '../models/userInfo.model';
+import { FriendModel } from '../models/friend.model';
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +63,8 @@ export class AuthService {
        this.saveToken( resp['idToken']);
        // tslint:disable-next-line:no-string-literal
        this.createUserInfo( resp['localId'], resp['email'], user.fullname ).subscribe();
+        // tslint:disable-next-line:no-string-literal
+       this.createEmptyFriends( resp['localId'] ).subscribe();
        return resp;
      }));
   }
@@ -73,6 +76,13 @@ export class AuthService {
     userInfo.name = name;
 
     return this.http.post(`${this.apiURI}/user.json`, userInfo);
+  }
+
+  private createEmptyFriends(userId: string) {
+    const friendsInfo: FriendModel = new FriendModel();
+    friendsInfo.userId = userId;
+
+    return this.http.post(`${this.apiURI}/friends.json`, friendsInfo);
   }
 
   private saveToken( idToken: string ) {

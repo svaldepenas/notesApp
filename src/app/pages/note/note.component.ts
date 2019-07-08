@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 import { UserInfoModel } from '../../models/userInfo.model';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
+import { FriendsService } from '../../services/friends.service';
+import { FriendModel } from '../../models/friend.model';
 
 @Component({
   selector: 'app-note',
@@ -18,6 +20,7 @@ export class NoteComponent implements OnInit {
 
   userInfo: UserInfoModel;
   note: NoteModel = new NoteModel();
+  friendInfo: FriendModel;
 
   // Multiselect
   dropdownList = [];
@@ -27,6 +30,7 @@ export class NoteComponent implements OnInit {
   constructor( private notesService: NotesService,
                private authService: AuthService,
                private userService: UserService,
+               private friendsService: FriendsService,
                private router: Router,
                private route: ActivatedRoute ) {
   }
@@ -58,7 +62,10 @@ export class NoteComponent implements OnInit {
       this.userService.getUserInfoById(user['localId']).subscribe(userInfoResp => {
         // console.log(userInfo);
         this.userInfo = userInfoResp;
-        this.initializeMembersSelect();
+        this.friendsService.getAllFriends(this.userInfo.userId).subscribe((data: FriendModel) => {
+          this.friendInfo = data;
+          this.initializeMembersSelect();
+        });
       });
     });
   }
@@ -68,11 +75,13 @@ export class NoteComponent implements OnInit {
     this.userService.getAllUsers(this.userInfo.userId).subscribe((users: UserInfoModel[]) => {
       this.dropdownList = [];
       users.forEach(user => {
-        this.dropdownList.push(
-          {
-            item_id: user.userId, item_text: `${user.name} ${user.surname ? user.surname : ''}`
-          }
-        );
+        if (this.friendInfo.friends.includes(user.userId)) {
+          this.dropdownList.push(
+            {
+              item_id: user.userId, item_text: `${user.name} ${user.surname ? user.surname : ''}`
+            }
+          );
+        }
       });
       this.selectedItems = [];
       this.dropdownSettings = {

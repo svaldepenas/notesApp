@@ -42,6 +42,7 @@ export class NotesComponent implements OnInit {
         // tslint:disable-next-line:no-string-literal
         this.notesService.getNotes(this.userInfo['userId']).subscribe(resp => {
           this.notes = resp;
+          this.sortByModificationDate();
           this.loaded = true;
         });
       });
@@ -86,6 +87,35 @@ export class NotesComponent implements OnInit {
       return false;
     } else {
       return true;
+    }
+  }
+
+  private sortByModificationDate(): void {
+    this.notes.sort((a: NoteModel, b: NoteModel) => {
+        return this.getTime(new Date(b.modificationDate)) - this.getTime(new Date(a.modificationDate));
+    });
+  }
+
+  private sortByCreationDate(): void {
+    this.notes.sort((a: NoteModel, b: NoteModel) => {
+        return this.getTime(new Date(a.creationDate)) - this.getTime(new Date(b.creationDate));
+    });
+  }
+
+  private getTime(date?: Date) {
+    return (date !== undefined && date !== null) ? date.getTime() : 0;
+  }
+
+  sortNotes( type: string) {
+    switch (type) {
+      case 'startDate':
+        this.sortByCreationDate();
+        break;
+      case 'recents':
+        this.sortByModificationDate();
+        break;
+      default:
+        break;
     }
   }
 

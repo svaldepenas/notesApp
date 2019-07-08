@@ -15,6 +15,7 @@ import { NoteComponent } from './pages/note/note.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown-angular7';
+import { SocialComponent } from './pages/social/social.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown-angular7';
     NavbarComponent,
     NotesComponent,
     NoteComponent,
-    ProfileComponent
+    ProfileComponent,
+    SocialComponent
   ],
   imports: [
     BrowserModule,

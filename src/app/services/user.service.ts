@@ -9,7 +9,6 @@ import { UserInfoModel } from '../models/userInfo.model';
 export class UserService {
 
   private apiURI = 'https://loginangular-7f32d.firebaseio.com';
-  private apiKey = 'AIzaSyCLzr9ShGGA2DFi-nV7gTe-mip2ajKAafQ';
 
   constructor( private http: HttpClient ) { }
 
@@ -17,6 +16,25 @@ export class UserService {
     return this.http.get(`${this.apiURI}/user.json`).pipe(map((data: object) => {
       return this.createUsersArray(data, userId);
     }));
+  }
+
+  getUsersByTerm( userId: string, term: string) {
+    return this.http.get(`${this.apiURI}/user.json`).pipe(map((data: object) => {
+      return this.filterByTerm(this.createUsersArray(data, userId), term);
+    }));
+  }
+
+  private filterByTerm(users: UserInfoModel[], term: string) {
+    const resultUsers: UserInfoModel[] =  [];
+
+    users.forEach((user: UserInfoModel) => {
+      // tslint:disable-next-line:max-line-length
+      if ((user.name && user.name.toUpperCase().includes(term.toUpperCase())) || (user.surname && user.surname.toUpperCase().includes(term.toUpperCase()))) {
+        resultUsers.push(user);
+      }
+    });
+
+    return resultUsers;
   }
 
   private createUsersArray(usersObj: object, userId: string) {

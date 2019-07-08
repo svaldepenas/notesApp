@@ -1,0 +1,39 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group row">
+                <h3 class="float-left col-sm-2">Search: </h3>
+                <div class="col-sm-10">
+                    <input (keyup)="onSearchChange($event)" keyup type="text" class="form-control" placeholder="Find a person" name="search" [(ngModel)]="search">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="friends" class="row animated fadeInUp fast">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Surname</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users; let i = index">
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{user.name}}</td>
+                        <td>{{user.surname}}</td>
+                        <td>
+                            <i *ngIf="!isFriend(user.userId)" (click)="addFriend(user.userId)" class="fas fa-user-plus"></i>
+                            <i *ngIf="isFriend(user.userId)" (click)="deleteFriend(user.userId)" class="fas fa-user-minus"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

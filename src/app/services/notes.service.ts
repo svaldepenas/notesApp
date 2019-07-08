@@ -14,6 +14,7 @@ export class NotesService {
 
   createNote( note: NoteModel) {
     console.log(note);
+    note.modificationDate = new Date();
     return this.http.post(`${this.apiURI}/notes.json`, note)
       .pipe(map( (resp: any) => {
         note.id = resp.name;
@@ -28,6 +29,7 @@ export class NotesService {
     };
 
     delete noteTmp.id;
+    noteTmp.modificationDate = new Date();
 
     return this.http.put(`${this.apiURI}/notes/${note.id}.json`, noteTmp);
   }

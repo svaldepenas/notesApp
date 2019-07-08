@@ -7,6 +7,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { NoteComponent } from './pages/note/note.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { SocialComponent } from './pages/social/social.component';
 
 const routes: Routes = [
   { path: 'home'    , component: HomeComponent, canActivate: [ AuthGuard ] },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'login'   , component: LoginComponent },
   { path: 'note/:id'   , component: NoteComponent, canActivate: [ AuthGuard ] },
   { path: 'profile'   , component: ProfileComponent, canActivate: [ AuthGuard ] },
+  { path: 'social'    , component: SocialComponent, canActivate: [ AuthGuard ] },
   { path: '**', pathMatch: 'full', redirectTo: 'login' }
 ];
 

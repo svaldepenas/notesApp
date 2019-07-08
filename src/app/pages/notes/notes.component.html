@@ -18,6 +18,18 @@
 <h3> Notes List</h3>
 <hr>
 
+<div *ngIf="notes.length !== 0 && loaded" class="btn-group btn-block mb-3">
+    <button class="btn btn-secondary btn-sm btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Order By
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" (click)="sortNotes('startDate')">Start date</a>
+        <a class="dropdown-item" (click)="sortNotes('recents')">Recents</a>
+        <!-- <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Separated link</a> -->
+    </div>
+</div>
+
 <div class="card-columns">
     <div *ngFor="let note of notes; let i = index" class="card animated fadeInUp delay-2s slower">
         <div class="card-body" [routerLink]="['/note', note.id]">

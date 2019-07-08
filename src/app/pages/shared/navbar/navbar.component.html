@@ -12,11 +12,14 @@
             <li class="nav-item" routerLinkActive="active">
                 <a class="nav-link" [routerLink]="['/note', 'new']"><i class="fas fa-plus-circle"></i> Add Note</a>
             </li>
+            <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['/social']"><i class="fas fa-users"></i> Social</a>
+            </li>
         </ul>
         <div class="my-2 my-lg-0">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item" routerLinkActive="active">
-                    <a class="nav-link" [routerLink]="['/profile']"><i class="far fa-user-circle"></i> Profile</a>
+                    <a class="nav-link" [routerLink]="['/profile']"><i class="far fa-user-circle"></i> {{ userInfo.name }}</a>
                 </li>
                 <li class="nav-item" routerLinkActive="active">
                     <a class="btn btn-outline-danger my-2 my-sm-0" (click)="logout()"><i class="fas fa-sign-out-alt"></i> LogOut</a>
