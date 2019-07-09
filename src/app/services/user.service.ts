@@ -87,4 +87,6 @@ export class UserService {
 
     return this.http.put(`${this.apiURI}/user/${userInfo.id}.json`, userInfoTmp);
   }
+
+
 }

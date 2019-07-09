@@ -7,4 +7,5 @@ export class UserInfoModel {
     address: string;
     birthdate: Date;
     mobile: string;
+    img: string;
 }

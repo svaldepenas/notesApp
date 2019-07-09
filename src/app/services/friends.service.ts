@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { FriendModel } from '../models/friend.model';
+import { UserInfoModel } from '../models/userInfo.model';
 
 @Injectable({
   providedIn: 'root'
@@ -51,5 +52,28 @@ export class FriendsService {
     delete friendTmp.id;
 
     return this.http.put(`${this.apiURI}/friends/${friendInfo.id}.json`, friendTmp);
+  }
+
+  getFriendsInfo( userId: string, friendInfo: FriendModel) {
+    return this.http.get(`${this.apiURI}/user.json`).pipe(map((data: object) => {
+      return this.createFriendsInfoArray(data, userId, friendInfo);
+    }));
+  }
+
+  private createFriendsInfoArray(usersObj: object, userId: string, friends: FriendModel) {
+    const friendsInfo: UserInfoModel[] = [];
+
+    if ( usersObj === null) { return []; }
+
+    Object.keys(usersObj).forEach(key => {
+      let friendInfo: UserInfoModel;
+      // tslint:disable-next-line:no-string-literal
+      if (friends.friends.includes(usersObj[key]['userId'])) {
+        friendInfo = usersObj[key];
+        friendInfo.id = key;
+        friendsInfo.push(friendInfo);
+      }
+    });
+    return friendsInfo;
   }
 }

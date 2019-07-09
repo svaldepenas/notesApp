@@ -17,6 +17,10 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown-angular7';
 import { SocialComponent } from './pages/social/social.component';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { environment } from '../environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +38,9 @@ import { SocialComponent } from './pages/social/social.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

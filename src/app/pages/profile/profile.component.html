@@ -1,60 +1,123 @@
 <div class="container mt-5">
-    <div class="row">
-        <div class="col-12">
-            <h3 class="float-left">Profile: <small>{{userInfo.name}} {{userInfo.surname}}</small></h3>
+
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>
+        </li>
+        <li class="nav-item mr-auto">
+            <a class="nav-link" id="pills-friends-tab" data-toggle="pill" href="#pills-friends" role="tab" aria-controls="pills-friends" aria-selected="false">Friends</a>
+        </li>
+        <li class="nav-item float-right">
             <a [routerLink]="['/home']" class="btn btn-outline-secondary float-right"><i class="fas fa-arrow-left"></i></a>
-        </div>
-    </div>
+        </li>
+    </ul>
+
     <hr>
 
-    <div class="row animated fadeInUp fast">
-        <div class="col">
-            <form (submit)="saveProfile( noteForm )" #noteForm="ngForm">
-                <div class="form-group">
-                    <label for="inputTitle">Firebase ID</label>
-                    <input type="text" class="form-control" disabled placeholder="Firebase ID" name="id" [(ngModel)]="userInfo.id">
-                    <small>This field is autofill.</small>
-                </div>
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 
-                <div class="form-group">
-                    <label for="inputTitle">Name</label>
-                    <input type="text" class="form-control" placeholder="Name" required minlength="5" name="name" [(ngModel)]="userInfo.name">
-                    <span *ngIf="noteForm.submitted && noteForm.form.controls['name'].errors" class="text-danger animated fadeIn mt-0 mb-2"><small>El nombre es obligatorio y debe tener al menos 5 carasteres.</small></span>
+            <!-- <div class="row mt-3">
+                <div class="col-12">
+                    <h3 class="float-left">Profile: <small>{{userInfo.name}} {{userInfo.surname}}</small></h3>
+                    <a [routerLink]="['/home']" class="btn btn-outline-secondary float-right"><i class="fas fa-arrow-left"></i></a>
                 </div>
+            </div>
+            <hr> -->
 
-                <div class="form-group">
-                    <label for="inputTitle">Surname</label>
-                    <input type="text" class="form-control" placeholder="Surname" required minlength="5" name="surname" [(ngModel)]="userInfo.surname">
-                    <span *ngIf="noteForm.submitted && noteForm.form.controls['surname'].errors" class="text-danger animated fadeIn mt-0 mb-2"><small>El apellido es obligatorio y debe tener al menos 5 carasteres.</small></span>
-                </div>
+            <!-- animated fadeInUp fast -->
+            <div class="row">
+                <div class="col">
+                    <form (submit)="saveProfile( noteForm )" #noteForm="ngForm">
+                        <!-- <div class="form-group">
+                            <img [src]="profileImg" alt="" class="mb-2 img-responsive img-thumbnail rounded-circle mx-auto d-block" style="max-height: 100px; max-width: 100px;">
+                            <div class="text-center">
+                                <label for="file-upload" class="custom-file-upload">
+                                <i class="fas fa-cloud-upload-alt"></i> Custom Upload
+                            </label>
+                                <input id="file-upload" type="file" accept=".png,.jpg" (change)="upload($event)" />
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar thin-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div> -->
 
-                <div class="form-group">
-                    <label for="inputTitle">Email</label>
-                    <input type="email" class="form-control" placeholder="Email" required name="email" [(ngModel)]="userInfo.email">
-                    <span *ngIf="noteForm.submitted && noteForm.form.controls['email'].errors" class="text-danger animated fadeIn mt-0 mb-2"><small>El email es obligatorio.</small></span>
-                </div>
+                        <div class="form-group">
+                            <label for="inputTitle">Firebase ID</label>
+                            <input type="text" class="form-control" disabled placeholder="Firebase ID" name="id" [(ngModel)]="userInfo.id">
+                            <small>This field is autofill.</small>
+                        </div>
 
-                <div class="form-group">
-                    <label for="inputTitle">Birthdate</label>
-                    <input type="date" class="form-control form-control-sm" name="birthdate" [(ngModel)]="userInfo.birthdate">
-                </div>
+                        <div class="form-group">
+                            <label for="inputTitle">Name</label>
+                            <input type="text" class="form-control" placeholder="Name" required minlength="5" name="name" [(ngModel)]="userInfo.name">
+                            <span *ngIf="noteForm.submitted && noteForm.form.controls['name'].errors" class="text-danger animated fadeIn mt-0 mb-2"><small>El nombre es obligatorio y debe tener al menos 5 carasteres.</small></span>
+                        </div>
 
-                <div class="form-group">
-                    <label for="inputTitle">Address</label>
-                    <textarea type="text" class="form-control" placeholder="Full address" maxlength="100" rows="3" name="address" [(ngModel)]="userInfo.address"></textarea>
-                </div>
+                        <div class="form-group">
+                            <label for="inputTitle">Surname</label>
+                            <input type="text" class="form-control" placeholder="Surname" required minlength="5" name="surname" [(ngModel)]="userInfo.surname">
+                            <span *ngIf="noteForm.submitted && noteForm.form.controls['surname'].errors" class="text-danger animated fadeIn mt-0 mb-2"><small>El apellido es obligatorio y debe tener al menos 5 carasteres.</small></span>
+                        </div>
 
-                <div class="form-group">
-                    <label for="inputTitle">Mobile</label>
-                    <input type="text" class="form-control form-control-sm" required pattern="[0-9]{9}" placeholder="Mobile" name="mobile" [(ngModel)]="userInfo.mobile">
-                    <span *ngIf="noteForm.submitted && noteForm.form.controls['mobile'].errors" class="text-danger animated fadeIn mt-0 mb-2"><small>El móvil es obligatorio y debe ser un móvil válido.</small></span>
-                </div>
+                        <div class="form-group">
+                            <label for="inputTitle">Email</label>
+                            <input type="email" class="form-control" placeholder="Email" required name="email" [(ngModel)]="userInfo.email">
+                            <span *ngIf="noteForm.submitted && noteForm.form.controls['email'].errors" class="text-danger animated fadeIn mt-0 mb-2"><small>El email es obligatorio.</small></span>
+                        </div>
 
-                <div class="form-group mt-5 text-center">
-                    <button class="btn btn-block btn-outline-info" type="submit"><i class="far fa-save"></i> Save</button>
+                        <div class="form-group">
+                            <label for="inputTitle">Birthdate</label>
+                            <input type="date" class="form-control form-control-sm" name="birthdate" [(ngModel)]="userInfo.birthdate">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputTitle">Address</label>
+                            <textarea type="text" class="form-control" placeholder="Full address" maxlength="100" rows="3" name="address" [(ngModel)]="userInfo.address"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputTitle">Mobile</label>
+                            <input type="text" class="form-control form-control-sm" required pattern="[0-9]{9}" placeholder="Mobile" name="mobile" [(ngModel)]="userInfo.mobile">
+                            <span *ngIf="noteForm.submitted && noteForm.form.controls['mobile'].errors" class="text-danger animated fadeIn mt-0 mb-2"><small>El móvil es obligatorio y debe ser un móvil válido.</small></span>
+                        </div>
+
+                        <div class="form-group mt-5 text-center">
+                            <button class="btn btn-block btn-outline-info" type="submit"><i class="far fa-save"></i> Save</button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab">
+            <div *ngIf="friendsInfo && friendsInfo.length > 0" class="table-responsive">
+                <table class="table table-sm table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Surname</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let friendInfo of friendsInfo; let i = index">
+                            <th scope="row">{{ i +1 }}</th>
+                            <td>{{ friendInfo.name }}</td>
+                            <td>{{ friendInfo.surname }}</td>
+                            <td><i class="fas fa-user-friends"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div *ngIf="!friendsInfo || friendsInfo.length === 0" class="alert alert-danger text-center" role="alert">
+                <h4 class="alert-heading">No friends yet?</h4>
+                <p>Check out social page to connect with your friends. <a [routerLink]="['/social']">Find friends.</a></p>
+                <hr>
+                <i class="fas fa-exclamation-triangle fa-2x"></i>
+            </div>
         </div>
     </div>
-
 </div>
