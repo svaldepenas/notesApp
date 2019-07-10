@@ -10,7 +10,19 @@
         </div>
     </div>
 
-    <div *ngIf="users && loaded && users.length > 0" class="row animated fadeInUp fast">
+    <div class="card-columns animated fadeInUp fast" *ngIf="users && loaded && users.length > 0">
+        <div *ngFor="let user of users; let i = index" class="card">
+            <div class="card-body text-center">
+                <p *ngIf="!user.img"><img class="img-fluid" src="../../../assets/images/profile.png" alt="card image"></p>
+                <p *ngIf="user.img"><img class="img-fluid" [src]="user.img" alt="card image"></p>
+                <h6 class="card-title">{{ user.name }} {{ user.surname }}</h6>
+                <i *ngIf="!isFriend(user.userId)" (click)="addFriend(user.userId)" class="fas fa-user-plus"></i>
+                <i *ngIf="isFriend(user.userId)" (click)="deleteFriend(user.userId)" class="fas fa-user-minus"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div *ngIf="users && loaded && users.length > 0" class="row animated fadeInUp fast">
         <div class="table-responsive">
             <table class="table">
                 <thead class="thead-light">
@@ -34,7 +46,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> -->
 
     <div *ngIf="(!users || users.length === 0) && loaded" class="alert alert-danger text-center" role="alert">
         <h5 class="alert-heading mb-3">No entries for search!</h5>
