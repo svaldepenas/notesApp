@@ -19,9 +19,11 @@
         <div class="my-2 my-lg-0">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item" routerLinkActive="active">
-                    <a class="nav-link" [routerLink]="['/profile']"><i class="far fa-user-circle"></i> {{ userInfo.name }}</a>
+                    <a class="nav-link" [routerLink]="['/profile']">
+                        <i *ngIf="!userInfo.img" class="far fa-user-circle"></i><img *ngIf="userInfo.img" class="img-responsive img-thumbnail rounded-circle" [src]="userInfo.img"> {{ userInfo.name }}
+                    </a>
                 </li>
-                <li class="nav-item" routerLinkActive="active">
+                <li class="nav-item my-auto" routerLinkActive="active">
                     <a class="btn btn-outline-danger my-2 my-sm-0" (click)="logout()"><i class="fas fa-sign-out-alt"></i> LogOut</a>
                 </li>
             </ul>
