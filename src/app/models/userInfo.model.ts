@@ -8,4 +8,5 @@ export class UserInfoModel {
     birthdate: Date;
     mobile: string;
     img: string;
+    oldRefImg: string;
 }

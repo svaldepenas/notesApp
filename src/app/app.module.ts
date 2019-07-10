@@ -19,7 +19,12 @@ import { SocialComponent } from './pages/social/social.component';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from '../environments/environment';
+import { ProfileDropZoneDirective } from './directives/profile-drop-zone.directive';
+import { FileUploadComponent } from './pages/file-upload/file-upload.component';
+import { FileSizePipe } from './pipes/file-size.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +36,10 @@ import { environment } from '../environments/environment';
     NotesComponent,
     NoteComponent,
     ProfileComponent,
-    SocialComponent
+    SocialComponent,
+    ProfileDropZoneDirective,
+    FileUploadComponent,
+    FileSizePipe
   ],
   imports: [
     BrowserModule,
@@ -40,7 +48,9 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     NgMultiSelectDropDownModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireDatabaseModule,
+    AngularFireStorageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

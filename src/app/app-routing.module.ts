@@ -8,6 +8,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { NoteComponent } from './pages/note/note.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SocialComponent } from './pages/social/social.component';
+import { FileUploadComponent } from './pages/file-upload/file-upload.component';
 
 const routes: Routes = [
   { path: 'home'    , component: HomeComponent, canActivate: [ AuthGuard ] },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'note/:id'   , component: NoteComponent, canActivate: [ AuthGuard ] },
   { path: 'profile'   , component: ProfileComponent, canActivate: [ AuthGuard ] },
   { path: 'social'    , component: SocialComponent, canActivate: [ AuthGuard ] },
+  { path: 'profilePhoto'    , component: FileUploadComponent, canActivate: [ AuthGuard ] },
   { path: '**', pathMatch: 'full', redirectTo: 'login' }
 ];
 

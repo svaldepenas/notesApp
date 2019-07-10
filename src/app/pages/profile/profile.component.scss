@@ -1,0 +1,54 @@
+.progress {
+    height: 0.2rem !important;
+    margin: auto;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.dropzone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 250px;
+    border: 2px dashed #f16624;
+    border-radius: 5px;
+    background: white;
+    margin: 10px 0;
+    &.hovering {
+        border: 2px solid #f16624;
+        color: #dadada !important;
+    }
+}
+
+progress::-webkit-progress-value {
+    transition: width 0.1s ease;
+}
+
+img {
+    width: 250px;
+    min-height: 100px !important;
+}
+
+.file-cta {
+    cursor: pointer;
+}
+
+.percent {
+    margin: auto;
+}
+
+p {
+    margin-bottom: 0.3rem;
+    margin-left: 1rem;
+}
