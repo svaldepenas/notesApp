@@ -44,6 +44,8 @@ export class NotesComponent implements OnInit {
           this.notes = resp;
           this.sortByModificationDate();
           this.loaded = true;
+
+          Notification.requestPermission().then(() => new Notification('Hola mundo!'));
         });
       });
     });
